@@ -35,6 +35,6 @@ class CountryController {
     @GetMapping("/{country}")
     CountryResponse getCountry(@PathVariable String country) {
         return service.findByName(country);
-    }
+	    }
 
 }

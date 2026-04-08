@@ -7,3 +7,4 @@ docker-data/
 .mvn/
 .vscode/
 frontend/node_modules/
+node_modules/
