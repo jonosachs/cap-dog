@@ -1,9 +1,10 @@
 import { getCountryFromInput, getSuggestions } from "./service.js";
 
+const output = document.getElementById("output");
+
 export function setupListeners() {
   const submit = document.getElementById("submit-btn");
   const input = document.getElementById("input");
-  const output = document.getElementById("output");
 
   input.addEventListener("input", handleInput);
   submit.addEventListener("click", handleClick);
@@ -23,6 +24,7 @@ async function handleInput() {
     }
   } catch (err) {
     console.error(err);
+    show(err);
   }
 }
 
@@ -32,11 +34,15 @@ async function handleClick() {
     clearOutput();
     if (!userInput) return;
     const countryJson = await getCountryFromInput(userInput);
-    // const countryStr = JSON.stringify(countryJson);
-    const output = buildCountryOuput(countryJson);
-    show(output);
+    if (countryJson) {
+      const formatted = buildCountryOuput(countryJson);
+      show(formatted);
+    } else {
+      show("Country not found.");
+    }
   } catch (err) {
     console.error(err);
+    show(err);
   }
 }
 
@@ -66,7 +72,6 @@ function buildCountryOuput(country) {
 }
 
 function buildSuggestions(countries) {
-  console.log(countries);
   const container = document.createElement("div");
 
   countries.forEach((f) => {

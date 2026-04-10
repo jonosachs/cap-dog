@@ -17,7 +17,7 @@ Claude Code docs below:
 
 - The backend seeds country/capital pairs from `country-by-capital-city.json` into PostgreSQL at startup.
 - REST endpoints expose the dataset: list all countries or fetch a single country by name (case-insensitive).
-- The frontend calls the API, provides typeahead suggestions, and shows the capital or a helpful error message.
+- The frontend calls the API, provides typeahead suggestions, and shows country data or a helpful error message.
 
 ## Running with Docker Compose (recommended)
 
@@ -96,10 +96,10 @@ curl http://localhost:8080/countries/France
 Response:
 
 ```json
-{ "country": "France", "capital": "Paris" }
+{country: 'France', code: 'FR', capital: 'Paris', region: 'Europe', population: '65273511'}
 ```
 
-The API returns a DTO without the database `id`, exposing only the country and capital fields.
+The API returns a DTO without the database `id`, exposing only the remaining fields.
 
 ## Frontend use
 

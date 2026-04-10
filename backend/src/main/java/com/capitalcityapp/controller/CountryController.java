@@ -13,9 +13,9 @@ import com.capitalcityapp.service.CountryService;
 
 // front-end's origin
 @CrossOrigin(origins = {
-    "http://127.0.0.1:5500",
-    "http://localhost:5500",
-    "http://localhost:3000"
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "http://localhost:3000"
 })
 @RequestMapping("/countries")
 @RestController
@@ -35,6 +35,6 @@ class CountryController {
     @GetMapping("/{country}")
     CountryResponse getCountry(@PathVariable String country) {
         return service.findByName(country);
-	    }
+    }
 
 }

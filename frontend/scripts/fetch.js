@@ -5,7 +5,7 @@ export async function getCountry(country) {
   );
 
   if (!response.ok) {
-    throw new Error(response.status || "Unable to fetch country");
+    throw new Error(response.message);
   }
 
   const jsonResponse = await response.json();
@@ -16,7 +16,7 @@ export async function getAll() {
   const response = await fetch(`http://localhost:8080/countries`);
 
   if (!response.ok) {
-    throw new Error(response.status || "Unable to fetch countries");
+    throw new Error(response.message);
   }
 
   const jsonResponse = await response.json();
