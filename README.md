@@ -60,7 +60,7 @@ cd backend
 
 ```
 cd frontend
-python -m http.server 5500
+npx serve .
 ```
 
 5. Open `http://127.0.0.1:5500` and search for a country.
