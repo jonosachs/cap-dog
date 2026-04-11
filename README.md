@@ -1,6 +1,6 @@
 # CapDog - Capital City Finder
 
-Spring Boot API serving country capital city data with mini JavaScript web app front-end for search and retrieval.
+Spring Boot API serving seleted world countries' data with mini JavaScript front-end for search and retrieval.
 
 ![Capital City Finder UI](img.png)
 
@@ -114,5 +114,4 @@ The API returns a DTO without the database `id`, exposing only the remaining fie
 
 ## Notes
 
-- Seed data loads on every backend start (existing rows are cleared first).
 - Swagger UI is available when running the backend at `http://localhost:8080/swagger-ui.html`.
