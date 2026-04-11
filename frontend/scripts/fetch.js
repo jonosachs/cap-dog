@@ -1,3 +1,5 @@
+import { ApiError } from "./ApiError.js";
+
 export async function getCountry(country) {
   const encodedCountry = encodeURIComponent(country.trim());
   const response = await fetch(
@@ -5,7 +7,8 @@ export async function getCountry(country) {
   );
 
   if (!response.ok) {
-    throw new Error(response.message);
+    const err = await response.text();
+    throw new ApiError(response.status, err);
   }
 
   const jsonResponse = await response.json();
@@ -16,7 +19,8 @@ export async function getAll() {
   const response = await fetch(`http://localhost:8080/countries`);
 
   if (!response.ok) {
-    throw new Error(response.message);
+    const err = await response.text();
+    throw new ApiError(response.status, err);
   }
 
   const jsonResponse = await response.json();

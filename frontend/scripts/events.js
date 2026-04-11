@@ -23,8 +23,7 @@ async function handleInput() {
       show("No results.");
     }
   } catch (err) {
-    console.error(err);
-    show(err);
+    handleError(err);
   }
 }
 
@@ -41,9 +40,17 @@ async function handleClick() {
       show("Country not found.");
     }
   } catch (err) {
-    console.error(err);
-    show(err);
+    handleError(err);
   }
+}
+
+function handleError(err) {
+  if (err.status === 404) {
+    show(err.message);
+    return;
+  }
+  console.error(err.status, err.message, err.stack);
+  show(`Something went wrong: ${err.message}`);
 }
 
 function clearOutput() {
