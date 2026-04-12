@@ -8,11 +8,8 @@ export async function getCountryFromInput(name) {
   return data;
 }
 
-export async function getSuggestions(input) {
+export async function getAllCountries() {
   const all = await getAll();
-  const filtered = all.filter((c) =>
-    c.country.toLowerCase().startsWith(input.toLowerCase()),
-  );
-  if (filtered.length == 0) return null;
-  return filtered;
+  if (all.length === 0) return null;
+  return all;
 }

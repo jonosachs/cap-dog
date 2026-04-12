@@ -1,5 +1,12 @@
-import { setupListeners } from "./events.js";
+import { setupListeners, buildDataList } from "./events.js";
+import { getAllCountries } from "./service.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  setupListeners();
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const countries = await getAllCountries();
+    buildDataList(countries);
+    setupListeners();
+  } catch (error) {
+    console.log(error);
+  }
 });

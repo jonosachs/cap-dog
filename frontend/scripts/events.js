@@ -1,29 +1,18 @@
-import { getCountryFromInput, getSuggestions } from "./service.js";
+import { getCountryFromInput } from "./service.js";
 
 const output = document.getElementById("output");
 
 export function setupListeners() {
-  const submit = document.getElementById("submit-btn");
+  const btn = document.getElementById("submit-btn");
   const input = document.getElementById("input");
 
-  input.addEventListener("input", handleInput);
-  submit.addEventListener("click", handleClick);
+  input.addEventListener("keydown", (e) => handleEnter(e));
+  btn.addEventListener("click", handleClick);
 }
 
-async function handleInput() {
-  const userInput = input.value;
-  clearOutput();
-  if (!userInput) return;
-  try {
-    const suggestions = await getSuggestions(userInput);
-    if (suggestions) {
-      const container = buildSuggestions(suggestions);
-      show(container);
-    } else {
-      show("No results.");
-    }
-  } catch (err) {
-    handleError(err);
+function handleEnter(e) {
+  if (e.key === "Enter") {
+    handleClick();
   }
 }
 
@@ -67,35 +56,43 @@ function show(item) {
 }
 
 function buildCountryOuput(country) {
-  const container = document.createElement("div");
+  const table = document.createElement("table");
+  table.className = "table text-start";
 
-  for (const key in country) {
-    const field = document.createElement("div");
-    field.textContent = `${key}: ${country[key]}`;
-    container.appendChild(field);
+  const tableBody = document.createElement("tbody");
+
+  for (const [key, value] of Object.entries(country)) {
+    const tr = createTableRow(key, value);
+    tableBody.appendChild(tr);
   }
-
-  return container;
+  table.appendChild(tableBody);
+  return table;
 }
 
-function buildSuggestions(countries) {
-  const container = document.createElement("div");
+function createTableRow(key, value) {
+  const tr = document.createElement("tr");
+  const tdkey = document.createElement("td");
+  const tdvalue = document.createElement("td");
+  tr.className = key === "country" ? "table-info" : key;
+  tdkey.textContent = key;
+  tdvalue.textContent = value;
+  tr.appendChild(tdkey);
+  tr.appendChild(tdvalue);
+  return tr;
+}
+
+export function buildDataList(countries) {
+  const dl = document.getElementById("countries");
+
+  // in memory container for compiling DOM elements without reflow
+  const fragment = document.createDocumentFragment();
 
   countries.forEach((f) => {
-    const field = document.createElement("div");
-    field.textContent = f.country;
-    field.className = "suggestions";
-
-    //make suggestions clickable
-    field.addEventListener("click", async (event) => {
-      const target = event.currentTarget;
-
-      if (target && target.textContent) {
-        document.getElementById("input").value = target.textContent;
-        container.replaceChildren("");
-      }
-    });
-    container.appendChild(field);
+    const o = document.createElement("option");
+    o.value = f.country;
+    fragment.appendChild(o);
   });
-  return container;
+
+  dl.appendChild(fragment);
+  return dl;
 }
