@@ -2,7 +2,7 @@
 
 Spring Boot API serving seleted world countries' data with mini JavaScript front-end for search and retrieval.
 
-![Capital City Finder UI](img.png)
+![Capital City Finder UI](img.png?v=2)
 
 Claude Code docs below:
 
