@@ -1,23 +1,22 @@
 # CapDog - Capital City Finder
 
-Spring Boot API serving seleted world countries' data with mini JavaScript front-end for search and retrieval.
+Spring Boot API serving selected country data with mini JavaScript front-end for search and retrieval.
 
 ![Capital City Finder UI](img.png?v=2)
-
-Claude Code docs below:
 
 ## Stack
 
 - Spring Boot 3, Java 17, Maven
 - PostgreSQL + Spring Data JPA
-- Vanilla HTML/CSS/JavaScript
+- Bootstrap 5 (via CDN)
+- Vanilla JavaScript
 - Docker and Docker Compose for local orchestration
 
 ## How it works
 
-- The backend seeds country/capital pairs from `country-by-capital-city.json` into PostgreSQL at startup.
+- The backend seeds country data from `countries.json` into PostgreSQL at startup.
 - REST endpoints expose the dataset: list all countries or fetch a single country by name (case-insensitive).
-- The frontend calls the API, provides typeahead suggestions, and shows country data or a helpful error message.
+- The frontend fetches all countries on load, caches them in memory to avoid redundant API calls, and uses a `<datalist>` for native autocomplete suggestions. Country data is rendered in a Bootstrap table, with errors surfaced inline.
 
 ## Running with Docker Compose (recommended)
 
@@ -96,15 +95,20 @@ curl http://localhost:8080/countries/France
 Response:
 
 ```json
-{country: 'France', code: 'FR', capital: 'Paris', region: 'Europe', population: '65273511'}
+{
+  "country": "France",
+  "code": "FR",
+  "capital": "Paris",
+  "region": "Europe",
+  "population": "65273511",
+  "currency": "Euro"
+}
 ```
-
-The API returns a DTO without the database `id`, exposing only the remaining fields.
 
 ## Frontend use
 
-- Start typing a country to see suggestions.
-- Click a suggestion or submit to fetch the capital.
+- Start typing a country name — suggestions appear via native browser autocomplete.
+- Click a suggestion or press Enter / click Submit to fetch the country data.
 - Validation and errors are surfaced inline (e.g., missing input, country not found).
 
 ## Project layout
@@ -115,3 +119,5 @@ The API returns a DTO without the database `id`, exposing only the remaining fie
 ## Notes
 
 - Swagger UI is available when running the backend at `http://localhost:8080/swagger-ui.html`.
+
+**README generated using Claude Code.
